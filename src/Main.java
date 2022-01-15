@@ -1,11 +1,14 @@
 import java.util.Scanner;
 
 public class Main {
+
+    public static boolean isLeapYear = false;
+
     public static void main(String[] args) {
         int day;
         int month;
         int year;
-        int doomsDayOfWeek = 1; //0 to 6 (0 is Sunday)
+        int doomsDayOfWeek; //0 to 6 (0 is Sunday)
         int shift;
         int resultDay = 0;
         Scanner input = new Scanner(System.in);
@@ -18,6 +21,8 @@ public class Main {
         month = input.nextInt();
         System.out.print("Enter the year: ");
         year = input.nextInt();
+        
+        doomsDayOfWeek = specialDayFinder2000Up(year);
 
         /*
         Doomsdays: month/day
@@ -37,51 +42,61 @@ public class Main {
 
         switch (month){
             case 1:
-                shift = (day - 3)%7;
+                if (!isLeapYear){
+                    shift = (day - 3) % 7;
+                }
+                else{
+                    shift = (day - 4) % 7;
+                }
                 resultDay = doomsDayOfWeek + shift;
                 break;
             case 2:
-                shift = (day - 28)%7;
+                if (!isLeapYear){
+                    shift = (day - 28) % 7;
+                }
+                else{
+                    shift = (day - 29) % 7;
+                }
                 resultDay = doomsDayOfWeek + shift;
                 break;
             case 3:
-                shift = (day - 14)%7;
+                shift = (day - 14) % 7;
                 resultDay = doomsDayOfWeek + shift;
                 break;
             case 4:
-                shift = (day - 4)%7;
+                shift = (day - 4) % 7;
                 resultDay = doomsDayOfWeek + shift;
                 break;
             case 5:
-                shift = (day - 9)%7;
+                shift = (day - 9) % 7;
                 resultDay = doomsDayOfWeek + shift;
                 break;
             case 6:
-                shift = (day - 6)%7;
+                shift = (day - 6) % 7;
                 resultDay = doomsDayOfWeek + shift;
                 break;
             case 7:
-                shift = (day - 11)%7;
+                shift = (day - 11) % 7;
                 resultDay = doomsDayOfWeek + shift;
                 break;
             case 8:
-                shift = (day - 8)%7;
+                shift = (day - 8) % 7;
                 resultDay = doomsDayOfWeek + shift;
                 break;
             case 9:
-                shift = (day - 5)%7;
+                shift = (day - 5) % 7;
                 resultDay = doomsDayOfWeek + shift;
                 break;
             case 10:
-                shift = (day - 10)%7;
+                shift = (day - 10) % 7;
                 resultDay = doomsDayOfWeek + shift;
                 break;
             case 11:
-                shift = (day - 7)%7;
+                shift = (day - 7) % 7;
                 resultDay = doomsDayOfWeek + shift;
                 break;
             case 12:
-                shift = (day - 12)%7;
+                shift = (day - 12) % 7;
                 resultDay = doomsDayOfWeek + shift;
                 break;
             default:
@@ -141,13 +156,27 @@ public class Main {
         if (resultDay < 0){
             resultDay = resultDay + 7;
         }
-        if (resultDay > 6){
+        else if (resultDay > 6){
             resultDay = resultDay - 7;
         }
 
         // Printing the day
         printDay(resultDay);
 
+    }
+
+    public static int specialDayFinder2000Up (int year){
+        // For the years 2000 and up
+        int yearDiff = year - 2000;
+        int leapYears = Math.floorDiv(yearDiff, 4);
+
+        if (yearDiff % 4 == 0){
+            isLeapYear = true;
+        }
+
+        // Special day in 2000 is Tuesday (2)
+        // Mod 7 to make the number between 0 and 6
+        return (2 + yearDiff + leapYears) % 7;
     }
 
     public static void printDay (int resultDay){
