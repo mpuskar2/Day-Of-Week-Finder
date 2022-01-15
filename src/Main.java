@@ -146,6 +146,11 @@ public class Main {
         }
 
         // Printing the day
+        printDay(resultDay);
+
+    }
+
+    public static void printDay (int resultDay){
         if (resultDay == 0){
             System.out.println("This day is a Sunday");
         }
@@ -170,6 +175,5 @@ public class Main {
         else {
             System.out.println("Error");
         }
-
     }
 }
